@@ -86,7 +86,7 @@ public class MatrixItTest {
         assertThat(it.hasNext(), is(true));
     }
 
-    /* This is my case and it is fail
+    // This is my case
     @Test
     public void whenMultiHashNextTwo() {
         int[][] in = {
@@ -95,7 +95,7 @@ public class MatrixItTest {
         MatrixIt it = new MatrixIt(in);
         assertThat(it.hasNext(), is(true));
         assertThat(it.hasNext(), is(true));
-    }*/
+    }
 
     @Test
     public void whenNoElements() {

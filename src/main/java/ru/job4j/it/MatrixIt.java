@@ -13,9 +13,18 @@ public class MatrixIt implements Iterator<Integer> {
         this.data = data;
     }
 
+    private boolean checkNext() {
+        for (int i = row; i < data.length; i++) {
+            if (data[i].length != 0) {
+                row = i;
+                return true;
+            }
+        }
+        return false;
+    }
+
     public boolean hasNext() {
-        return (row < data.length && column < data[row].length)
-                || (++row < data.length && column < data[row].length);
+        return row < data.length && column < data[row].length || checkNext();
     }
 
     public Integer next() {

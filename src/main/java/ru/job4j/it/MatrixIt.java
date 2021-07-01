@@ -24,7 +24,7 @@ public class MatrixIt implements Iterator<Integer> {
     }
 
     public boolean hasNext() {
-        return row < data.length && column < data[row].length || checkNext();
+        return row < data.length && column < data[row].length  || checkNext();
     }
 
     public Integer next() {

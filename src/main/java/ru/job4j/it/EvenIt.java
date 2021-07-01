@@ -28,9 +28,9 @@ public class EvenIt implements Iterator<Integer> {
 
     @Override
     public Integer next() {
-        if (parityCheck()) {
-            return data[index++];
+        if (!hasNext()) {
+            throw new NoSuchElementException();
         }
-        throw new NoSuchElementException();
+        return data[index++];
     }
 }

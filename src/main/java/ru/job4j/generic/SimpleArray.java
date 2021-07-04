@@ -53,11 +53,14 @@ public class SimpleArray<T> implements Iterable<T> {
 
              @Override
              public boolean hasNext() {
-                 return cursor < size && size != 0;
+                 return cursor < size;
              }
 
              @Override
              public T next() {
+                 if (!hasNext()) {
+                     throw new NoSuchElementException();
+                 }
                  return (T) simpleArray[cursor++];
              }
          };

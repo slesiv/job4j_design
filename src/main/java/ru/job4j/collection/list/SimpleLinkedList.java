@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
-public class SimpleLinkedList<E> implements List {
+public class SimpleLinkedList<E> implements List<E> {
     private int size = 0;
     private int modCount = 0;
     private Node<E> first;
@@ -62,7 +62,7 @@ public class SimpleLinkedList<E> implements List {
     }
 
     @Override
-    public Iterator iterator() {
+    public Iterator<E> iterator() {
         return new Iterator<E>() {
             private int expectedModCount = modCount;
             protected int indexIt = 0;

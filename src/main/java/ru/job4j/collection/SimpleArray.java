@@ -21,8 +21,20 @@ public class SimpleArray<T> implements Iterable<T> {
         if (size == container.length) {
             container = Arrays.copyOf(container, size + size);
         }
-        container[size] = model;
+        container[size] = (T) model;
         size++;
+    }
+
+    public boolean contains(T model) {
+        if (size == 0) {
+            return false;
+        }
+        for (int i = 0; i < size; i++) {
+            if (container[i] == model) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
@@ -47,5 +59,16 @@ public class SimpleArray<T> implements Iterable<T> {
                 return (T) container[indexIt++];
             }
         };
+    }
+
+    public static void main(String[] args) {
+        SimpleArray<Integer> si = new SimpleArray<>();
+        si.add(1);
+        si.add(null);
+        si.add(2);
+        Iterator<Integer> it = si.iterator();
+        while (it.hasNext()) {
+            System.out.println(it.next());
+        }
     }
 }

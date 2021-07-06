@@ -48,17 +48,4 @@ public class SimpleArray<T> implements Iterable<T> {
             }
         };
     }
-
-    public static void main(String[] args) {
-        SimpleArray s = new SimpleArray();
-
-        for (int i = 0; i < 15; i++) {
-            s.add(i);
-        }
-
-        Iterator<Integer> it = s.iterator();
-        while (it.hasNext()) {
-            System.out.println(it.next());
-        }
-    }
 }

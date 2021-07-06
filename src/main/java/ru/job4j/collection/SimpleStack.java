@@ -5,16 +5,12 @@ import java.util.Iterator;
 public class SimpleStack<T> {
     private ForwardLinked<T> linked = new ForwardLinked<T>();
 
-    public void addFirst(T value) {
-        linked.add(value);
-    }
-
     public T pop() {
         return linked.deleteFirst();
     }
 
     public void push(T value) {
-        addFirst(value);
+        linked.add(value);
     }
 
     public static void main(String[] args) {

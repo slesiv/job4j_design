@@ -2,6 +2,7 @@ package ru.job4j.map;
 
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class SimpleMap<K, V> implements Map<K, V> {
     private static final float LOAD_FACTOR = 0.75f;
@@ -12,10 +13,10 @@ public class SimpleMap<K, V> implements Map<K, V> {
 
     @Override
     public boolean put(K key, V value) {
-        int index = indexFor(hash(key.hashCode()));
         if (count >= capacity * LOAD_FACTOR) {
             expand();
         }
+        int index = indexFor(hash(key.hashCode()));
         if (table[index] == null) {
             table[index] = new MapEntry<K, V>(key, value);
             count++;
@@ -31,7 +32,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
     }
 
     private int indexFor(int hash) {
-        return hash & capacity - 1;
+        return hash & (capacity - 1);
     }
 
     private void expand() {
@@ -50,7 +51,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
     @Override
     public Object get(Object key) {
         int index = indexFor(hash(key.hashCode()));
-        if (table[index] != null) {
+        if (table[index] != null && table[index].key.equals(key)) {
             return table[index].value;
         }
         return null;
@@ -59,9 +60,10 @@ public class SimpleMap<K, V> implements Map<K, V> {
     @Override
     public boolean remove(Object key) {
         int index = indexFor(hash(key.hashCode()));
-        if (table[index] != null) {
+        if (table[index] != null && table[index].key.equals(key)) {
             table[index] = null;
             modCount++;
+            count--;
             return true;
         }
         return false;
@@ -78,7 +80,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
                 if (expectedModCount != modCount) {
                     throw new ConcurrentModificationException();
                 }
-                for (int i = indexIt; i < table.length - 1; i++) {
+                for (int i = indexIt; i < table.length; i++) {
                     if (table[i] != null) {
                         return true;
                     }
@@ -89,6 +91,9 @@ public class SimpleMap<K, V> implements Map<K, V> {
 
             @Override
             public K next() {
+                if (!hasNext()) {
+                    throw new NoSuchElementException();
+                }
                 return (K) table[indexIt++].key;
             }
         };

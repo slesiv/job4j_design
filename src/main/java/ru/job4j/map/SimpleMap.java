@@ -1,6 +1,7 @@
 package ru.job4j.map;
 
 import java.util.ConcurrentModificationException;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -35,6 +36,10 @@ public class SimpleMap<K, V> implements Map<K, V> {
         return hash & (capacity - 1);
     }
 
+    private int indexFor1(int hash) {
+        return hash & capacity - 1;
+    }
+
     private void expand() {
         capacity = capacity * 2;
         MapEntry<K, V>[] tableNew = new MapEntry[capacity];
@@ -48,8 +53,9 @@ public class SimpleMap<K, V> implements Map<K, V> {
         modCount++;
     }
 
+
     @Override
-    public Object get(Object key) {
+    public V get(K key) {
         int index = indexFor(hash(key.hashCode()));
         if (table[index] != null && table[index].key.equals(key)) {
             return table[index].value;
@@ -58,7 +64,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
     }
 
     @Override
-    public boolean remove(Object key) {
+    public boolean remove(K key) {
         int index = indexFor(hash(key.hashCode()));
         if (table[index] != null && table[index].key.equals(key)) {
             table[index] = null;

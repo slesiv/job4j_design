@@ -35,23 +35,18 @@ public class SimpleMap<K, V> implements Map<K, V> {
         return hash & (capacity - 1);
     }
 
-    private int indexFor1(int hash) {
-        return hash & capacity - 1;
-    }
-
     private void expand() {
         capacity = capacity * 2;
-        MapEntry<K, V>[] tableNew = new MapEntry[capacity];
+        MapEntry<K, V>[] oldTable = table;
+        table = new MapEntry[capacity];
 
-        for (int i = 0; i < table.length; i++) {
-            if (table[i] != null) {
-                tableNew[indexFor(hash(table[i].key.hashCode()))] = table[i];
+        for (MapEntry<K, V> el: oldTable) {
+            if (el != null) {
+                put(el.key, el.value);
+                count--;
             }
         }
-        table = tableNew;
-        modCount++;
     }
-
 
     @Override
     public V get(K key) {

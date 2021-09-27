@@ -29,24 +29,4 @@ public class Analize {
 
         return new Info(add, change, del);
     }
-
-    public static void main(String[] args) {
-        User u1 = new User(1, "A");
-        User u2 = new User(2, "B");
-        User u3 = new User(3, "C");
-        User u4 = new User(3, "D");
-
-        Set<User> previous = new HashSet<>();
-        previous.add(u1);
-        previous.add(u2);
-        //previous.add(u4);
-
-        Set<User> current = new HashSet<>();
-        current.add(u1);
-        current.add(u2);
-        current.add(u3);
-
-        Info i = diff(previous, current);
-        System.out.println(i);
-    }
 }

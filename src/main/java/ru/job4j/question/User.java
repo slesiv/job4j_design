@@ -51,15 +51,4 @@ public class User {
     public String toString() {
         return id + "=" + name;
     }
-
-    public boolean changed(Set<User> c) {
-        Objects.requireNonNull(c);
-
-        for (User user : c) {
-            if (user.getId() == this.getId() && user.getName() != this.getName()) {
-                return true;
-            }
-        }
-        return false;
-    }
 }

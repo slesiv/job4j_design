@@ -87,4 +87,16 @@ public class AnalizeTest {
         );
     }
 
+    @Test
+    public void whenNotUserPrevious() {
+        User u1 = new User(1, "A");
+        User u2 = new User(2, "B");
+        User u3 = new User(3, "C");
+        Set<User> previous = Set.of();
+        Set<User> current = Set.of(u1, u2, u3);
+        assertThat(
+                Analize.diff(previous, current),
+                is(new Info(3, 0, 0))
+        );
+    }
 }

@@ -2,16 +2,13 @@ package ru.job4j.io;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.StringJoiner;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Config {
 
     private final String path;
-    private Map<String, String> values = new HashMap<String, String>();
+    private Map<String, String> values = new HashMap<>();
 
     public Config(final String path) {
         this.path = path;
@@ -24,14 +21,18 @@ public class Config {
             while ((read = in.readLine()) != null) {
                 if (read.matches("#.*|^?$")) { // проверка на пустую строку
                     continue;
-                } else if (read.matches("^=.*|.*=") || !read.contains("=")) { // проверка на корректность строки (начинается с =, заканчивается =, не содержит =)
+                } else if (read.matches("^=.*") || !read.contains("=")) { // проверка на корректность строки (начинается с = || не содержит =)
                     throw new IllegalArgumentException();
                 }
                 String[] kv = read.split("=");
-                this.values.put(kv[0], kv[1]);
+                if (kv.length == 1) {
+                    this.values.put(kv[0], "");
+                } else {
+                    this.values.put(kv[0], kv[1]);
+                }
             }
 
-            this.values.entrySet().stream().forEach(System.out::println);
+            this.values.entrySet().forEach(System.out::println);
         } catch (IOException e) {
             e.printStackTrace();
         }

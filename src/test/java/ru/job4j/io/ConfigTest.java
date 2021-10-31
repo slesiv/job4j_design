@@ -32,15 +32,6 @@ public class ConfigTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void whenIncorrectValue() {
-        String path = "./data/incorrectValue.properties";
-        Config config = new Config(path);
-        config.load();
-        assertThat(config.value("key"), is("value"));
-
-    }
-
-    @Test(expected = IllegalArgumentException.class)
     public void whenIncorrectComment() {
         String path = "./data/incorrectComment.properties";
         Config config = new Config(path);

@@ -13,8 +13,8 @@ public class Analizy {
         String dateTimeEnd;
         String lineLog;
 
-        try (PrintWriter out = new PrintWriter(new BufferedOutputStream(new FileOutputStream(target)))) {
-            try (BufferedReader in = new BufferedReader(new FileReader(source))) {
+        try (PrintWriter out = new PrintWriter(new BufferedOutputStream(new FileOutputStream(target)));
+                BufferedReader in = new BufferedReader(new FileReader(source))) {
                 while ((lineLog = in.readLine()) != null) {
                     if (!lineLog.isEmpty()) {
                         code = Integer.parseInt(lineLog.substring(0, 3));
@@ -31,9 +31,6 @@ public class Analizy {
                         }
                     }
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -1,9 +1,6 @@
 package ru.job4j.io;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class Analizy {
     public static void unavailable(String source, String target) {
@@ -26,8 +23,7 @@ public class Analizy {
                         } else if (errorStart) {
                             dateTimeEnd = lineLog.substring(4);
                             errorStart = false;
-                            out.write(dateTimeStart + ";" + dateTimeEnd + ";");
-                            out.write(System.lineSeparator());
+                            out.println(dateTimeStart + ";" + dateTimeEnd + ";");
                         }
                     }
                 }

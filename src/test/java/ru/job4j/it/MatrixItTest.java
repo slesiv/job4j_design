@@ -85,7 +85,6 @@ public class MatrixItTest {
         assertThat(it.hasNext(), is(true));
     }
 
-    // This is my case
     @Test
     public void whenMultiHashNextTwo() {
         int[][] in = {

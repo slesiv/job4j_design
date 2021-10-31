@@ -46,7 +46,7 @@ public class SimpleLinkedList<E> implements List<E> {
     public E get(int index) {
         Objects.checkIndex(index, size);
 
-        if (index < (size >> 1)) { // index < (size >> 1) <-> index < (size / 2)
+        if (index < (size >> 1)) {
             Node<E> elementX = first;
             for (int i = 0; i < index; i++) {
                 elementX = elementX.next;

@@ -57,7 +57,7 @@ public class SimpleArrayTest {
 
     @Test
     public void whenSimpleArrayGrowing() {
-        SimpleArray<Object> array = new SimpleArray<>(); //default capacity = 2
+        SimpleArray<Object> array = new SimpleArray<>();
         array.add("first");
         array.add("second");
         array.add("three");

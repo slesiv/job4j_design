@@ -44,7 +44,6 @@ public class SimpleSetTest {
         assertFalse(set.contains(null));
     }
 
-    //FAIL
     @Test
     public void whenAddNullAndInteger() {
         Set<Integer> set = new SimpleSet<>();

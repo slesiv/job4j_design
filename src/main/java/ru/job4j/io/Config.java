@@ -14,14 +14,18 @@ public class Config {
         this.path = path;
     }
 
+    /**
+     * В методе сначала происходит проверка на пустую строку
+     * А потом на корректность строки (начинается с = || не содержит =)
+     */
     public void load() {
         try (BufferedReader in = new BufferedReader(
                 new FileReader(this.path))) {
             String read;
             while ((read = in.readLine()) != null) {
-                if (read.matches("#.*|^?$")) { // проверка на пустую строку
+                if (read.matches("#.*|^?$")) {
                     continue;
-                } else if (read.matches("^=.*") || !read.contains("=")) { // проверка на корректность строки (начинается с = || не содержит =)
+                } else if (read.matches("^=.*") || !read.contains("=")) {
                     throw new IllegalArgumentException();
                 }
                 String[] kv = read.split("=");

@@ -13,27 +13,28 @@ public class ArgsName {
 
     private void parse(String[] args) {
         if (args.length == 0) {
-            throw new IllegalArgumentException("parameters missing");
+            throw new IllegalArgumentException("need parameters");
         } else {
-            values = Arrays.stream(args).filter(x -> {
-                if (!x.contains("-")) {
-                    throw new IllegalArgumentException("The parameter is specified incorrectly, the \"-\" symbol is missing");
-                } else if (!x.contains("=")) {
-                    throw new IllegalArgumentException("The parameter is specified incorrectly, the \"=\" symbol is missing");
-                }
-                return true; })
-            .map(str -> str.substring(1).split("="))
-            .collect(Collectors.toMap(s -> {
-                if (s[0].isEmpty()) {
-                    throw new IllegalArgumentException("Key should not contains null");
-                }
-                return s[0];
-            }, s -> {
-                if (s.length <= 1) {
-                    throw new IllegalArgumentException("Value should not contains null");
-                }
-                return s[1];
-            }));
+            values = Arrays.stream(args)
+                    .filter(x -> {
+                        if (!x.contains("-")) {
+                            throw new IllegalArgumentException("The parameter is specified incorrectly, the \"-\" symbol is missing");
+                        } else if (!x.contains("=")) {
+                            throw new IllegalArgumentException("The parameter is specified incorrectly, the \"=\" symbol is missing");
+                        }
+                        return true; })
+                    .map(str -> str.substring(1).split("="))
+                    .collect(Collectors.toMap(s -> {
+                        if (s[0].isEmpty()) {
+                            throw new IllegalArgumentException("Key should not contains null");
+                        }
+                        return s[0];
+                    }, s -> {
+                        if (s.length <= 1) {
+                            throw new IllegalArgumentException("Value should not contains null");
+                        }
+                        return s[1];
+                    }));
         }
     }
 

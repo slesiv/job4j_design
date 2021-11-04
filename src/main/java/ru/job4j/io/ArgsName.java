@@ -13,7 +13,7 @@ public class ArgsName {
 
     private void parse(String[] args) {
         if (args.length == 0) {
-            throw new IllegalArgumentException("need parameters");
+            throw new IllegalArgumentException("Need parameters");
         } else {
             values = Arrays.stream(args)
                     .filter(x -> {

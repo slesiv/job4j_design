@@ -8,7 +8,7 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.HashSet;
 import java.util.Set;
 
-public class DublicatesVisitor extends SimpleFileVisitor<Path> {
+public class DuplicatesVisitor extends SimpleFileVisitor<Path> {
 
     Set<FileProperty> files = new HashSet<>();
 

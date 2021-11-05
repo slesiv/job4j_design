@@ -34,4 +34,9 @@ public class ArgsNameTest {
     public void whenWrongSomeArgumentKey() {
         ArgsName jvm = ArgsName.of(new String[] {"-enconding=UTF-8", "-=512"});
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void whenWrongSomeArgument() {
+        ArgsName jvm = ArgsName.of(new String[] {"-enconding===UTF-8", "-=512"});
+    }
 }

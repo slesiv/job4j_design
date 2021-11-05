@@ -48,6 +48,6 @@ public class FileProperty {
 
     @Override
     public String toString() {
-        return "FileProperty{" + size + " byte" + name + "}";
+        return "FileProperty{" + size + " byte, " + name + "}";
     }
 }

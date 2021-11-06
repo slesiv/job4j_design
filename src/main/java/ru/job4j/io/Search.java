@@ -13,7 +13,7 @@ public class Search {
             throw new IllegalArgumentException("Root folder AND/OR file extension is null. Usage java -jar dir.jar ROOT_FOLDER FILE_EXTENSION.");
         }
         Path start = Paths.get(args[0]);
-        if (!start.toFile().isDirectory() && !start.toFile().exists()) {
+        if (!start.toFile().exists() && !start.toFile().isDirectory()) {
             throw new IllegalArgumentException("Root folder must be a existing directory");
         }
         search(start, p -> p.toFile().getName().endsWith(args[1])).forEach(System.out::println);

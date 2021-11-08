@@ -16,30 +16,36 @@ public class ConsoleChat {
     private static final String STOP = "стоп";
     private static final String CONTINUE = "продолжить";
     private final List<String> log = new ArrayList<>();
+    private List<String> phrases = new ArrayList<>();
 
     public ConsoleChat(String path, String botAnswers) {
         this.path = path;
         this.botAnswers = botAnswers;
+        readPhrases();
     }
 
     public void run() {
         String msgClient = "";
         Scanner scanner = new Scanner(System.in);
+        int stop = 0;
 
-        start:
         while (!msgClient.equals(OUT)) {
-            msgClient = writeMsgClient(scanner);
-            if (msgClient.equals(STOP)) {
-                writeMsgBot("Беседа остановлена, для продолжения введите \"продолжить\".");
-                while (!msgClient.equals(CONTINUE)) {
-                    msgClient = writeMsgClient(scanner);
-                    if (msgClient.equals(OUT)) {
-                        break start;
-                    }
-                }
-                writeMsgBot(getRandomPhrase(readPhrases()));
-            } else if (!msgClient.equals(OUT)) {
-                writeMsgBot(getRandomPhrase(readPhrases()));
+            System.out.print("Введите сообщение: ");
+            msgClient = scanner.nextLine();
+            log.add("Сообщение клиента: " + msgClient);
+            if (msgClient.equals(OUT)) {
+                break;
+            }
+            if (stop != 1 && msgClient.equals(STOP)) {
+                System.out.println("Сообщение бота: Беседа остановлена, для продолжения введите \"продолжить\".");
+                log.add("Сообщение бота: Беседа остановлена, для продолжения введите \"продолжить\".");
+                stop++;
+            }
+            if (stop == 0 || msgClient.equals(CONTINUE)) {
+                String msgBot = getRandomPhrase(phrases);
+                System.out.println("Сообщение бота: " + msgBot);
+                log.add("Сообщение бота: " + msgBot);
+                stop = 0;
             }
         }
 
@@ -47,35 +53,22 @@ public class ConsoleChat {
         saveLog(log);
     }
 
-    private List<String> readPhrases() {
+    private void readPhrases() {
         try (BufferedReader br = new BufferedReader(new FileReader(botAnswers, Charset.forName("WINDOWS-1251")))) {
-            return br.lines().collect(Collectors.toList());
+            phrases = br.lines().collect(Collectors.toList());
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return new ArrayList<>();
     }
 
     private void saveLog(List<String> log) {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(path))) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(path, Charset.forName("WINDOWS-1251")))) {
             for (String line : log) {
                 bw.write(line + "\n");
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    private String writeMsgClient(Scanner scanner) {
-        System.out.print("Введите сообщение: ");
-        String msg = scanner.nextLine();
-        log.add("Сообщение клиента: " + msg);
-        return msg;
-    }
-
-    private void writeMsgBot(String response) {
-        System.out.println("Сообщение бота: " + response);
-        log.add("Сообщение бота: " + response);
     }
 
     private String getRandomPhrase(List<String> phrases) {
@@ -87,7 +80,7 @@ public class ConsoleChat {
     }
 
     public static void main(String[] args) {
-        ConsoleChat cc = new ConsoleChat("log.txt", "./data/listWords.txt");
+        ConsoleChat cc = new ConsoleChat("log.txt", "./data/ListWordMSWORD.txt");
         cc.run();
     }
 }

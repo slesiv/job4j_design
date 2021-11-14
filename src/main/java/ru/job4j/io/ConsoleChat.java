@@ -49,7 +49,6 @@ public class ConsoleChat {
             }
         }
 
-        scanner.close();
         saveLog(log);
     }
 
@@ -64,7 +63,7 @@ public class ConsoleChat {
     private void saveLog(List<String> log) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(path, Charset.forName("WINDOWS-1251")))) {
             for (String line : log) {
-                bw.write(line + "\n");
+                bw.write(line + System.lineSeparator());
             }
         } catch (IOException e) {
             e.printStackTrace();

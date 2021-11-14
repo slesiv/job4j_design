@@ -29,19 +29,19 @@ public class ConsoleChat {
         Scanner scanner = new Scanner(System.in);
         int stop = 0;
 
-        while (!msgClient.equals(OUT)) {
+        while (!OUT.equals(msgClient)) {
             System.out.print("Введите сообщение: ");
             msgClient = scanner.nextLine();
             log.add("Сообщение клиента: " + msgClient);
-            if (msgClient.equals(OUT)) {
+            if (OUT.equals(msgClient)) {
                 break;
             }
-            if (stop != 1 && msgClient.equals(STOP)) {
+            if (stop != 1 && STOP.equals(msgClient)) {
                 System.out.println("Сообщение бота: Беседа остановлена, для продолжения введите \"продолжить\".");
                 log.add("Сообщение бота: Беседа остановлена, для продолжения введите \"продолжить\".");
                 stop++;
             }
-            if (stop == 0 || msgClient.equals(CONTINUE)) {
+            if (stop == 0 || CONTINUE.equals(msgClient)) {
                 String msgBot = getRandomPhrase(phrases);
                 System.out.println("Сообщение бота: " + msgBot);
                 log.add("Сообщение бота: " + msgBot);

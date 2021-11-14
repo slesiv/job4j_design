@@ -13,11 +13,14 @@ public class CSVReader {
 
     public void handle(ArgsName argsName) throws Exception {
         int i = 0;
+        boolean isStdout = "stdout".equals(argsName.get("out"));
         List<Integer> indexColumns = new ArrayList<>();
+        BufferedWriter bw = null;
 
-        try (Scanner scanner = new Scanner(new FileInputStream(argsName.get("path"))).useDelimiter(",");
-             BufferedWriter bw = new BufferedWriter(new FileWriter(argsName.get("out")))) {
-
+        try (Scanner scanner = new Scanner(new FileInputStream(argsName.get("path"))).useDelimiter(",")) {
+            if (!isStdout) {
+                bw = new BufferedWriter(new FileWriter(argsName.get("out")));
+            }
             while (scanner.hasNext()) {
                 List<String> rowInCSV = Arrays.asList(scanner.nextLine().split(";"));
 
@@ -31,7 +34,7 @@ public class CSVReader {
                     resultRow.add(rowInCSV.get(index));
                 }
 
-                if (argsName.get("out").equals("stdout")) {
+                if (isStdout) {
                     System.out.println(String.join(";", resultRow));
                 } else {
                     bw.write(String.join(";", resultRow));
@@ -40,6 +43,10 @@ public class CSVReader {
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+        } finally {
+            if (bw != null) {
+                bw.close();
+            }
         }
     }
 

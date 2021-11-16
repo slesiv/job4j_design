@@ -13,10 +13,17 @@ public class EchoServer {
                      BufferedReader in = new BufferedReader(
                              new InputStreamReader(socket.getInputStream()))) {
                     out.write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
+                    boolean hasReplied = false;
                     while (in.ready()) {
                         String str = in.readLine();
-                        if (str.contains("Bye")) {
-                            server.close();
+                        if (!hasReplied) {
+                            String response = prepareResponse(str);
+                            if ("Exit".equals(response)) {
+                                server.close();
+                            } else {
+                                out.write(prepareResponse(str).getBytes());
+                            }
+                            hasReplied = true;
                         }
                         System.out.println(str);
                     }
@@ -24,5 +31,25 @@ public class EchoServer {
                 }
             }
         }
+    }
+
+    private static String prepareResponse(String str) {
+        int indexStart = str.indexOf("?");
+        int indexEnd = str.lastIndexOf(" ");
+        String[] entryStr = str.substring(indexStart + 1, indexEnd).split("=");
+        if (entryStr.length > 1) {
+            String key = entryStr[0];
+            String value = entryStr[1];
+            if ("msg".equals(key)) {
+                if ("Exit".equals(value)) {
+                    return "Exit";
+                } else if ("Hello".equals(value)) {
+                    return "Hello";
+                }
+                return "What";
+            }
+            return "Enter key parameter \"msg\"";
+        }
+        return "Enter parameter key \"msg\" and value";
     }
 }

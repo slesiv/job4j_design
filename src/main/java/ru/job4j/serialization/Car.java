@@ -21,6 +21,18 @@ public class Car {
         this.model = model;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
     @Override
     public String toString() {
         return "Car{"

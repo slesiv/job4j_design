@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dealcard id="1" name="Buy Toyota Rav" isActive="true">
+    <car id="123" price="2345000.55" model="Toyota Rav"/>
+    <buyers>
+        <buyer>Ivan</buyer>
+        <buyer>Petr</buyer>
+    </buyers>
+</dealcard>

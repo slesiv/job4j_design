@@ -17,6 +17,9 @@ public class DealCard {
     private String name;
     @XmlAttribute
     private boolean isActive;
+
+    @XmlElementWrapper
+    @XmlElement(name = "buyer")
     private String[] buyers;
     private Car car;
 

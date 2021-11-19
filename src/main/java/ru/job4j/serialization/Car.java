@@ -1,11 +1,19 @@
 package ru.job4j.serialization;
 
+import javax.xml.bind.annotation.XmlAttribute;
 import java.math.BigDecimal;
 
 public class Car {
+
+    @XmlAttribute
     private int id;
+    @XmlAttribute
     private BigDecimal price;
+    @XmlAttribute
     private String model;
+
+    public Car() {
+    }
 
     public Car(int id, BigDecimal price, String model) {
         this.id = id;

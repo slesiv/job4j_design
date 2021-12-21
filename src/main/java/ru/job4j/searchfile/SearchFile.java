@@ -18,18 +18,20 @@ public class SearchFile {
     */
     public static void main(String[] args) throws IOException {
 
-        ArgsName argsName = ArgsName.of(args);
-        Path dir = Paths.get(argsName.get("d"));
-        String name = argsName.get("n");
-        String type = argsName.get("t");
-        String out = argsName.get("o");
-
         if (args.length != 4) {
             throw new IllegalArgumentException("Missing parameters. Usage java -jar dir.jar -d=start_folder -n=name/mask/regex -t=name/mask/regex -o=file.txt");
         }
+
+        ArgsName argsName = ArgsName.of(args);
+        Path dir = Paths.get(argsName.get("d"));
+
         if (!dir.toFile().exists() && !dir.toFile().isDirectory()) {
             throw new IllegalArgumentException("Root folder must be a existing directory");
         }
+
+        String name = argsName.get("n");
+        String type = argsName.get("t");
+        String out = argsName.get("o");
 
         if ("name".equals(type)) {
             try (PrintWriter writer = new PrintWriter(out)) {
@@ -38,7 +40,7 @@ public class SearchFile {
         }
 
         if ("mask".equals(type)) {
-            PathMatcher matcher = FileSystems.getDefault().getPathMatcher("glob:" + name);
+            PathMatcher matcher = FileSystems.getDefault().getPathMatcher("glob:*" + name);
             try (PrintWriter writer = new PrintWriter(out)) {
                 Search.search(dir, matcher::matches).forEach(writer::println);
             }

@@ -13,20 +13,6 @@ create table issues(
     people_id int references people(id)
 );
 
-select * from issues as i
-join people as p
-on i.people_id = p.id;
-
-select i.date_created, i.date_closed, p.login, i.subject
-from issues as i
-join people as p
-on i.people_id = p.id;
-
-select p.login as Логин, i.subject as "Заголовок задачи", i.date_closed as "Завершение задачи"
-from issues as i
-join people as p
-on i.people_id = p.id;
-
 insert into people(login, password)
 values
 ('jon', '123456'),
@@ -40,3 +26,17 @@ values
 ('заявка №3', 'описание заявки №3', 3, '13.09.2021'),
 ('заявка №3', 'описание заявки №3', 3, null),
 ('заявка №3', 'описание заявки №3', 3, '18.09.2021');
+
+select * from issues as i
+join people as p
+on i.people_id = p.id;
+
+select i.date_created, i.date_closed, p.login, i.subject
+from issues as i
+join people as p
+on i.people_id = p.id;
+
+select p.login as Логин, i.subject as "Заголовок задачи", i.date_closed as "Завершение задачи"
+from issues as i
+join people as p
+on i.people_id = p.id;

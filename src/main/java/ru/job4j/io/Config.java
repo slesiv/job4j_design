@@ -12,6 +12,7 @@ public class Config {
 
     public Config(final String path) {
         this.path = path;
+        load();
     }
 
     /**
@@ -35,8 +36,6 @@ public class Config {
                     this.values.put(kv[0], kv[1]);
                 }
             }
-
-            this.values.entrySet().forEach(System.out::println);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -59,11 +58,5 @@ public class Config {
             e.printStackTrace();
         }
         return out.toString();
-    }
-
-    public static void main(String[] args) {
-        Config config = new Config("app.properties");
-        config.load();
-
     }
 }

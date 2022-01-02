@@ -89,4 +89,26 @@ public class TableEditor implements AutoCloseable {
             connection.close();
         }
     }
+
+    public static void main(String[] args) throws Exception {
+        var properties = new Properties();
+
+        try (var fis = new FileInputStream("app.properties")) {
+            properties.load(fis);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        var te = new TableEditor(properties);
+        te.createTable("test");
+        System.out.println(getTableScheme(te.connection, "test"));
+        te.addColumn("test", "name", "varchar(100)");
+        System.out.println(getTableScheme(te.connection, "test"));
+        te.renameColumn("test", "name", "new_name");
+        System.out.println(getTableScheme(te.connection, "test"));
+        te.dropColumn("test", "new_name");
+        System.out.println(getTableScheme(te.connection, "test"));
+        te.dropTable("test");
+        System.out.println("Table deleted");
+    }
 }

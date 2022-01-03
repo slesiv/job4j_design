@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.stream.Collectors;
@@ -20,12 +21,20 @@ public class ImportDB {
     }
 
     public List<User> load() throws IOException {
-        List<User> users;
+        List<User> users = new ArrayList<>();
         try (BufferedReader rd = new BufferedReader(new FileReader(dump))) {
-            users = rd.lines()
-                    .map(x -> x.split(";"))
-                    .map(line -> new User(line[0], line[1]))
-                    .collect(Collectors.toList());
+            rd.lines().map(x -> x.split(";"))
+                .collect(Collectors.toMap(s -> {
+                    if (s[0].isEmpty()) {
+                        throw new IllegalArgumentException("Name should not contains null");
+                    }
+                    return s[0];
+                }, s -> {
+                    if (s.length <= 1) {
+                        throw new IllegalArgumentException("Email should not contains null");
+                    }
+                    return s[1];
+                }));
         }
         return users;
     }

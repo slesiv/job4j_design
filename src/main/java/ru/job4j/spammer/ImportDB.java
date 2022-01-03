@@ -26,11 +26,8 @@ public class ImportDB {
             String lineFile;
             while ((lineFile = rd.readLine()) != null) {
                 String[] lineUser = lineFile.split(";");
-                if (lineUser[0].isEmpty()) {
-                    throw new IllegalArgumentException("Name should not contains null");
-                }
-                if (lineUser.length != 2) {
-                    throw new IllegalArgumentException("Email should not contains null");
+                if (lineUser.length != 2 || lineUser[0].isEmpty() || lineUser[1].isEmpty()) {
+                    throw new IllegalArgumentException("There must be two non-empty parameters. Example: Name;Email;");
                 }
                 User u = new User(lineUser[0], lineUser[1]);
                 users.add(u);

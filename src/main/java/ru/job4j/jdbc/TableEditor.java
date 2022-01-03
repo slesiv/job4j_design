@@ -17,43 +17,40 @@ public class TableEditor implements AutoCloseable {
     }
 
     private void initConnection() {
-        try (var fis = new FileInputStream("app.properties")) {
-            properties.load(fis);
-            String url = properties.getProperty("postgres.url");
-            String login = properties.getProperty("postgres.user");
-            String password = properties.getProperty("postgres.password");
+        String url = properties.getProperty("postgres.url");
+        String login = properties.getProperty("postgres.user");
+        String password = properties.getProperty("postgres.password");
+
+        try {
             connection = DriverManager.getConnection(url, login, password);
-        } catch (Exception throwables) {
-            throwables.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 
     public void createTable(String tableName) {
-        final String CREATE_TABLE = "CREATE TABLE " + tableName + "();";
-        buildSqlRequest(CREATE_TABLE);
+        String createTable = String.format("CREATE TABLE %s();", tableName);
+        buildSqlRequest(createTable);
     }
 
     public void dropTable(String tableName) {
-        final String DROP_TABLE = "DROP TABLE " + tableName + ";";
-        buildSqlRequest(DROP_TABLE);
+        String dropTable = String.format("DROP TABLE %s;", tableName);
+        buildSqlRequest(dropTable);
     }
 
     public void addColumn(String tableName, String columnName, String type) {
-        final String ADD_COLUMN = "ALTER TABLE " + tableName
-                + " ADD COLUMN " + columnName + " " + type + ";";
-        buildSqlRequest(ADD_COLUMN);
+        String addColumn = String.format("ALTER TABLE %s ADD COLUMN %s %s;", tableName, columnName, type);
+        buildSqlRequest(addColumn);
     }
 
     public void dropColumn(String tableName, String columnName) {
-        final String DROP_COLUMN = "ALTER TABLE " + tableName
-                + " DROP COLUMN " + columnName + ";";
-        buildSqlRequest(DROP_COLUMN);
+        String dropColumn = String.format("ALTER TABLE %s DROP COLUMN %s;", tableName, columnName);
+        buildSqlRequest(dropColumn);
     }
 
     public void renameColumn(String tableName, String columnName, String newColumnName) {
-        final String RENAME_COLUMN = "ALTER TABLE " + tableName
-                + " RENAME COLUMN " + columnName + " TO " + newColumnName + ";";
-        buildSqlRequest(RENAME_COLUMN);
+        String renameColumn = String.format("ALTER TABLE %s RENAME COLUMN %s TO %s;", tableName, columnName, newColumnName);
+        buildSqlRequest(renameColumn);
     }
 
     private void buildSqlRequest(String request) {

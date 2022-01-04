@@ -61,7 +61,19 @@ values
 ('Audi R8', 2, 5, 4, 158200),
 ('Ford RAM', 5, 6, 7, 68200);
 
-select * from car c
+select  from car c
 left join body b ON c.body_id = b.id
 left join engine e ON c.engine_id = e.id
 left join transmission t ON c.transmission_id = t.id;
+
+select b.id, b.type from car c
+right join body b ON c.body_id = b.id
+where c.body_id is null;
+
+select e.id, e.manufacturer, e.power from car c
+right join engine e ON c.engine_id = e.id
+where c.engine_id is null;
+
+select t.id, t.type, t.amount_gears from car c
+right join transmission t ON c.transmission_id = t.id
+where c.transmission_id is null;
